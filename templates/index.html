@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Cattle & Buffalo Recognition System</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐄</text></svg>">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">🐄</span>
+                <div>
+                    <h1>CattleAI Pro</h1>
+                    <p>Advanced Recognition System</p>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="/">Home</a>
+                <a href="/docs" target="_blank">API Docs</a>
+                <a href="/admin">Admin Hub</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="container">
+        <!-- Upload Section -->
+        <section class="upload-section glass fade-up">
+            <h2>📤 Smart Upload</h2>
+            <p style="color: var(--text-muted); margin-bottom: 2rem; font-weight: 500;">
+                Deploy our neural engine to identify breed and age with precision.
+            </p>
+
+            <div class="upload-area" id="upload-area">
+                <div class="upload-icon">📸</div>
+                <h3>Drop Image or Browse</h3>
+                <p>High-resolution JPG/PNG/WEBP preferred</p>
+                <button class="upload-btn">Select Asset</button>
+            </div>
+            <input type="file" id="file-input" accept="image/jpeg,image/png,image/webp,image/bmp">
+
+            <!-- Preview Section -->
+            <div class="preview-section fade-up" id="preview-section">
+                <div class="preview-container">
+                    <div class="image-preview">
+                        <img id="preview-image" src="" alt="Neural Input">
+                        <div class="scan-line" id="scan-line"></div>
+                    </div>
+                    <div class="image-info">
+                        <h4 style="font-size: 1.5rem; margin-bottom: 1rem;">Asset Validation</h4>
+                        <p style="margin-bottom: 0.5rem;"><strong>Fingerprint:</strong> <span id="file-name">-</span></p>
+                        <p style="margin-bottom: 2rem;"><strong>Payload:</strong> <span id="file-size">-</span></p>
+                        <button class="analyze-btn" id="analyze-btn">
+                            ⚡ Initiate Neural Analysis
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Animal Mismatch Error -->
+        <div class="glass fade-up" id="mismatch-section" style="display:none; margin-top:2rem; padding:3rem; text-align:center; border-left: 6px solid #ef4444;">
+            <div style="font-size:4rem; margin-bottom:1rem;">⚠️</div>
+            <h2 style="color:#ef4444; margin-bottom:1rem;">Animal Does Not Match</h2>
+            <p style="font-size:1.1rem; color:var(--text-muted); margin-bottom:0.5rem;">
+                Only <strong>Cow</strong> or <strong>Buffalo</strong> images are accepted.
+            </p>
+            <p id="mismatch-detected" style="font-size:1rem; color:var(--text-muted); margin-bottom:2rem;"></p>
+            <button onclick="resetMismatch()" style="padding:0.8rem 2rem; background:var(--primary-dark); color:#fff; border:none; border-radius:12px; font-weight:700; cursor:pointer; font-size:1rem;">
+                Try Again
+            </button>
+        </div>
+
+        <!-- Loading -->
+        <div class="loading" id="loading">
+            <div class="spinner-sphere">
+                <div class="sphere"></div>
+            </div>
+            <p style="font-weight: 600; font-size: 1.2rem; color: var(--primary-dark);">Engaging Recognition Engine...</p>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Processing visual features through MobileNetV2</p>
+        </div>
+
+        <!-- Results Section -->
+        <section class="results-section glass" id="results-section">
+            <h2 style="color: var(--primary-dark);">📈 Intelligence Report</h2>
+
+            <div class="results-grid">
+                <!-- Animal Type -->
+                <div class="result-card glass animal-type">
+                    <h3>Classification</h3>
+                    <div class="result-value" id="animal-type-value">-</div>
+                    <div class="confidence-wrapper">
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" id="animal-type-confidence-fill"></div>
+                        </div>
+                        <p class="confidence-text" id="animal-type-confidence-text" style="font-size: 0.8rem; margin-top: 0.5rem; font-weight: 600;">-</p>
+                    </div>
+                </div>
+
+                <!-- Breed -->
+                <div class="result-card glass breed">
+                    <h3>Identified Breed</h3>
+                    <div class="result-value" id="breed-value">-</div>
+                    <div class="confidence-wrapper">
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" id="breed-confidence-fill"></div>
+                        </div>
+                        <p class="confidence-text" id="breed-confidence-text" style="font-size: 0.8rem; margin-top: 0.5rem; font-weight: 600;">-</p>
+                    </div>
+                    <div class="top-predictions" style="margin-top: 2rem; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 1.5rem;">
+                        <h4 style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem;">Alternative Candidates</h4>
+                        <div id="top-breeds"></div>
+                    </div>
+                </div>
+
+                <!-- Age -->
+                <div class="result-card glass age">
+                    <h3>Maturity Level</h3>
+                    <div class="result-value" id="age-value">-</div>
+                    <div class="confidence-wrapper">
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" id="age-confidence-fill"></div>
+                        </div>
+                        <p class="confidence-text" id="age-confidence-text" style="font-size: 0.8rem; margin-top: 0.5rem; font-weight: 600;">-</p>
+                    </div>
+                    <div class="top-predictions" style="margin-top: 2rem; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 1.5rem;">
+                        <h4 style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-muted); margin-bottom: 1rem;">Maturity Spectrum</h4>
+                        <div id="age-predictions"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Breed Info -->
+            <div class="breed-info-box fade-up" id="breed-info-section" style="display: none;">
+                <h3 style="margin-bottom: 2rem;">ℹ️ <span id="breed-info-name"></span> Profile</h3>
+                <div class="breed-details" id="breed-details"></div>
+            </div>
+
+            <!-- Feedback -->
+            <div class="feedback-section" style="margin-top: 4rem; text-align: center;">
+                <p style="font-weight: 600; margin-bottom: 1.5rem;">Help improve the Neural Model</p>
+                <div class="feedback-buttons" style="display: flex; gap: 1rem; justify-content: center;">
+                    <button class="feedback-btn correct" onclick="submitFeedback(true)" style="padding: 1rem 2.5rem; border-radius: 14px; font-weight: 700;">
+                        ✓ Report Accuracy
+                    </button>
+                    <button class="feedback-btn incorrect" onclick="submitFeedback(false)" style="padding: 1rem 2.5rem; border-radius: 14px; font-weight: 700;">
+                        ✗ Report Discrepancy
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- History Section -->
+        <section class="history-section">
+            <div class="history-header" style="margin-bottom: 2rem;">
+                <h2 style="margin-bottom: 0;">🖇 System Logs</h2>
+                <button class="danger-btn" type="button" onclick="clearHistory()">
+                    Clear Logs
+                </button>
+            </div>
+            <div class="history-card-wrap glass">
+                <table class="history-table">
+                    <thead>
+                        <tr>
+                            <th>Preview</th>
+                            <th>Class</th>
+                            <th>Breed / Confidence</th>
+                            <th>Maturity</th>
+                            <th>Timestamp</th>
+                        </tr>
+                    </thead>
+                    <tbody id="history-body">
+                        <tr>
+                            <td colspan="5" style="text-align: center; padding: 4rem; color: var(--text-muted);">
+                                Syncing with database...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="fade-up">
+        <p>CattleAI Pro v2.0 Gold Edition</p>
+        <p>Quantum Perception Engine | Powered by PyTorch & FastAPI</p>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>

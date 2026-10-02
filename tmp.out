@@ -1,0 +1,13 @@
+
+============================================================
+  Indian Cattle & Buffalo Recognition System
+  AI-Powered Breed & Age Identification
+============================================================
+
+Starting server...
+  - Web Interface: http://localhost:8000
+  - API Documentation: http://localhost:8000/docs
+  - Admin Panel: http://localhost:8000/admin
+
+Press Ctrl+C to stop the server.
+

@@ -1,0 +1,41 @@
+
+============================================================
+  Indian Cattle & Buffalo Recognition System
+  AI-Powered Breed & Age Identification
+============================================================
+
+Starting server...
+  - Web Interface: http://localhost:8000
+  - API Documentation: http://localhost:8000/docs
+  - Admin Panel: http://localhost:8000/admin
+  - (Alt) Web Interface: http://127.0.0.1:8000
+
+Press Ctrl+C to stop the server.
+
+INFO:     ::1:64182 - "GET / HTTP/1.1" 200 OK
+INFO:     ::1:64184 - "GET /docs HTTP/1.1" 200 OK
+INFO:     ::1:58237 - "GET / HTTP/1.1" 200 OK
+INFO:     ::1:58237 - "GET /api/predictions?limit=10 HTTP/1.1" 200 OK
+INFO:     ::1:58237 - "GET /uploads/307f0e30-774e-4974-b1ac-8b2d04a41ca5.jpg HTTP/1.1" 304 Not Modified
+Running animal validation via external AI...
+[VALIDATION RAW RESPONSE]: {"is_cow_or_buffalo": true, "detected": "cow"}
+[VALIDATION RESULT]: is_valid=True, detected=cow
+Using External AI (gemini) for prediction...
+No trained model found. Using pretrained backbone with random heads.
+For accurate predictions, train the model on cattle/buffalo dataset.
+INFO:     ::1:56602 - "POST /api/predict HTTP/1.1" 200 OK
+INFO:     ::1:56602 - "GET /api/predictions?limit=10 HTTP/1.1" 200 OK
+INFO:     ::1:56602 - "GET /uploads/3c3c840a-1b77-4ea8-b933-61b294a6c10d.jpg HTTP/1.1" 200 OK
+Running animal validation via external AI...
+[VALIDATION RAW RESPONSE]: {"is_cow_or_buffalo": true, "detected": "cow"}
+[VALIDATION RESULT]: is_valid=True, detected=cow
+Using External AI (gemini) for prediction...
+No trained model found. Using pretrained backbone with random heads.
+For accurate predictions, train the model on cattle/buffalo dataset.
+INFO:     ::1:53234 - "POST /api/predict HTTP/1.1" 200 OK
+INFO:     ::1:53234 - "GET /api/predictions?limit=10 HTTP/1.1" 200 OK
+INFO:     ::1:53234 - "GET /uploads/a56be781-258e-4e79-9fef-5f62e3befd2e.jpg HTTP/1.1" 200 OK
+INFO:     ::1:57454 - "GET / HTTP/1.1" 200 OK
+INFO:     ::1:57454 - "GET /api/predictions?limit=10 HTTP/1.1" 200 OK
+INFO:     ::1:57454 - "GET /uploads/a56be781-258e-4e79-9fef-5f62e3befd2e.jpg HTTP/1.1" 304 Not Modified
+INFO:     ::1:52963 - "GET /uploads/3c3c840a-1b77-4ea8-b933-61b294a6c10d.jpg HTTP/1.1" 304 Not Modified

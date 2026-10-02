@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(venv/Scripts/pip show:*)",
+      "Bash(find \"c:/Users/ramak/Desktop/age and breed/app\" -name \"*.pyc\" -delete)",
+      "Bash(find \"c:/Users/ramak/Desktop/age and breed/app\" -name \"__pycache__\" -type d -exec rm -rf {} +)",
+      "Bash(curl -s http://localhost:8000/health)",
+      "Bash(taskkill /F /PID 36900 /PID 13300 /PID 80236)",
+      "Bash(Get-Process python:*)",
+      "Bash(Stop-Process -Force)",
+      "Bash(for pid:*)",
+      "Bash(do kill:*)",
+      "Bash(cmd /c \"taskkill /F /T /PID 36900 & taskkill /F /T /PID 13300 & taskkill /F /T /PID 80236\")",
+      "Bash(cmd /c 'taskkill /F /IM python.exe /T')",
+      "Bash(venv/Scripts/python.exe -c \":*)"
+    ]
+  }
+}

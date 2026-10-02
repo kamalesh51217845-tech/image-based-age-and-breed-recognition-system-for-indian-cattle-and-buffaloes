@@ -1,0 +1,26 @@
+# Web Framework
+fastapi
+uvicorn[standard]
+python-multipart
+jinja2
+aiofiles
+
+# Deep Learning
+torch
+torchvision
+timm
+
+# Image Processing
+pillow
+opencv-python
+numpy
+
+# Database
+sqlalchemy
+aiosqlite
+
+# Utilities
+python-dotenv
+pydantic
+pydantic-settings
+google-generativeai
